@@ -12,7 +12,7 @@ function App() {
       <div>
         <SideBar />
         <Routes>
-            <Route path={'/cmp'} element={<CmpPage />} />
+            <Route path={'/'} element={<CmpPage />} />
         </Routes>
       </div>
     </div>
