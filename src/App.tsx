@@ -7,12 +7,12 @@ import { CmpPage } from './pages/CmpPage';
 
 function App() {
   return (
-    <div className="App">
+    <div className={'app'}>
       <Header></Header>
-      <div>
+      <div className={'app_wrapper'}>
         <SideBar />
         <Routes>
-            <Route path={'/'} element={<CmpPage />} />
+          <Route path={'/'} element={<CmpPage />} />
         </Routes>
       </div>
     </div>
