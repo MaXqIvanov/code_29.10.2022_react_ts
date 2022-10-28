@@ -1,3 +1,3 @@
 export type stringState = {
-    loading: boolean,
-}
+  loading: boolean;
+};

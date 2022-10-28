@@ -1,3 +1,3 @@
-/// <reference types="react-scripts" />
+// / <reference types="react-scripts" />
 
-declare module "js-cookie"
+declare module 'js-cookie';
