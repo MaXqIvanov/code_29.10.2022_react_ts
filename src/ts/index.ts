@@ -1,6 +1,6 @@
 export type stringState = {
   loading: boolean;
-  string_all: Array<
+  stringAll: Array<
     {
       "child": [
         null
@@ -17,7 +17,7 @@ export type stringState = {
       "salary": number,
       "supportCosts": number,
       "total": number
-    } | Array<null>>;
+    } | any>;
 
 };
 
@@ -40,3 +40,21 @@ export type getString =
     "supportCosts": number,
     "total": number
   } | Array<null>>;
+
+export type getNewString =  {
+  "child": [
+    null
+  ],
+  "equipmentCosts": number,
+  "estimatedProfit": number,
+  "id": number,
+  "machineOperatorSalary": number,
+  "mainCosts": number,
+  "materials": number,
+  "mimExploitation": number,
+  "overheads": number,
+  "rowName": "string",
+  "salary": number,
+  "supportCosts": number,
+  "total": number
+}

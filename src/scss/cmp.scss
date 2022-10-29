@@ -24,3 +24,102 @@ $border_main: #414144;
     justify-content: center;
     align-items: center;
 }
+
+// work width table component
+.table_wrapper{
+    margin: 10px 11px;
+}
+.table{
+    width: 100%;
+    thead{
+        position: relative;
+        height: 30px;
+        color: $second_color;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.1px;
+        th{
+            padding: 5px;
+            padding-top: 0px;
+            font-weight: 400;
+            height: 30px;
+            text-align: left;
+        }
+    }
+}
+.separate_line{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border-bottom: 1px solid $border_main;
+}
+.empty_string_array{
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.group_btn{
+    display: flex;
+}
+.btn_field_1{
+    height: 20px;
+    width: 23px;
+    background-image: url('../assets/folder_1.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+.btn_field_2{
+    height: 20px;
+    width: 23px;
+    background-image: url('../assets/folder_2.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 8px;
+    cursor: pointer;
+}
+.btn_text_field{
+    height: 20px;
+    width: 23px;
+    background-image: url('../assets/folder_3.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 8px;
+    cursor: pointer;
+}
+.btn_delete{
+    margin-top: 3px;
+    height: 17px;
+    width: 17px;
+    background-image: url('../assets/TrashFill.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.string_elem{
+    position: relative;
+    height: 60px;
+    border-bottom: 1px solid $border_main;
+    box-sizing: border-box;
+    td{
+        padding: 5px;
+    }
+}
+.visible_all_btn{
+    max-width: fit-content;
+    display: flex;
+    border-radius: 6px;
+    background: $border_main;
+    padding: 6px;
+}
+.not_visible_all_btn{
+    padding: 6px;
+}
+.cell_btn{
+    max-width: 75px;
+    min-width: 75px;
+}
