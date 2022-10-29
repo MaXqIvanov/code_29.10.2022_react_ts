@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import api from '../plugins/axios/api';
-// import Cookies from 'js-cookie';
-import { stringState } from '../ts';
+import Cookies from 'js-cookie';
+import { getString, stringState } from '../ts';
 
-export const getString = createAsyncThunk('auth/getString', async () => {
-  const response = await api.get(`/accounts/profile/profile/`);
+export const getSpecialKey = createAsyncThunk('auth/getString', async () => {
+  const response = await api.post(`v1/outlay-rows/entity/create`);
+  return { response };
+});
+export const getTreeRows = createAsyncThunk('auth/getTreeRows', async () => {
+  const response = await api.get(`/v1/outlay-rows/entity/${Cookies.get('eID')}/row/list`);
   return { response };
 });
 
@@ -12,6 +16,7 @@ const stringSlice = createSlice({
   name: 'auth',
   initialState: {
     loading: false,
+    string_all: [],
   },
   reducers: {
     logout(state: stringState, action: PayloadAction) {
@@ -19,13 +24,32 @@ const stringSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getString.pending, (state: stringState, action: PayloadAction) => {
+    builder.addCase(getSpecialKey.pending, (state: stringState, action: PayloadAction) => {
       state.loading = true;
     });
-    builder.addCase(getString.fulfilled, (state: stringState, { payload }: PayloadAction<{}>) => {
+    builder.addCase(
+      getSpecialKey.fulfilled,
+      (state: stringState, { payload }: PayloadAction<{ response: { data: { id: number } } }>) => {
+        state.loading = false;
+        Cookies.set('eID', payload.response.data.id);
+      }
+    );
+    builder.addCase(getSpecialKey.rejected, (state: stringState) => {
       state.loading = false;
     });
-    builder.addCase(getString.rejected, (state: stringState) => {
+
+    builder.addCase(getTreeRows.pending, (state: stringState, action: PayloadAction) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      getTreeRows.fulfilled,
+      (state: stringState, { payload }: PayloadAction<{ response: { data: getString } }>) => {
+        console.log(payload);
+        state.loading = false;
+        state.string_all = payload.response.data;
+      }
+    );
+    builder.addCase(getTreeRows.rejected, (state: stringState) => {
       state.loading = false;
     });
   },

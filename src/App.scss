@@ -3,6 +3,7 @@
 $background_second: #27272A;
 $background_main: #202124;
 $main_color: #FFFFFF;
+$second_color: #A1A1AA;
 $border_main: #414144;
 
 .app{
@@ -42,6 +43,21 @@ $border_main: #414144;
   display: flex;
   align-items: center;
 }
+.menu_btn_icon{
+  height: 24px;
+  width: 24px;
+  background-image: url('../src/assets/header/header_icon1.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.back_btn_icon{
+  height: 24px;
+  width: 24px;
+  background-image: url('../src/assets/header/header_icon2.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 28px;
+}
 // sidebar
 .sidebar{
   padding-top: 8px;
@@ -51,4 +67,75 @@ $border_main: #414144;
   min-height: calc(100vh - 44px - 8px);
   background-color: $background_second;
   border-right: 1px solid $border_main;
+}
+.select_wrapper{
+  margin-left: -22.75px;
+  margin-top: -8px;
+  height: 45px;
+  width:  calc(100% + 22.75px);
+  box-sizing: border-box;
+  border-bottom: 1px solid $border_main;
+  position: relative;
+}
+.select_btn_icon{
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  background-image: url('../src/assets/arrow_btn.svg');
+  height: 20px;
+  width: 24px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: translate(-50% ,-50%);
+}
+.select_title_wrapper{
+  color: $second_color;
+  margin-left: 20px;
+  padding-top: 8px;
+  cursor: pointer;
+  .select_title{
+    font-size: 14px;
+  }
+  .select_choose{
+    font-size: 10px;
+  }
+}
+.select_body{
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 10px;
+  background: white;
+  color: $second_color;
+
+  div{
+    cursor: pointer;
+    transition: all linear 0.22s;
+    &:hover{
+      color: black;
+    }
+  }
+}
+.sidenav_elem_wrapper{
+  display: flex;
+  height: 32px;
+  align-items: center;
+  cursor: pointer;
+}
+.sidenav_elem_wrapper_active{
+  background: $second_color;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+.sidenav_elem_icon{
+  background-image: url('../src/assets/icon.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 20px;
+  width: 20px;
+}
+.sidenav_elem_title{
+  margin-left: 16.75px;
 }

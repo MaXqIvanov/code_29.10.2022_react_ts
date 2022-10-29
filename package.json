@@ -30,7 +30,8 @@
   },
   "prettier": {
     "singleQuote": true,
-    "printWidth": 100
+    "printWidth": 100,
+    "endOfLine": "auto"
   },
   "eslintConfig": {
     "extends": [
@@ -51,8 +52,10 @@
     ]
   },
   "devDependencies": {
+    "@types/sass": "^1.43.1",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
+    "css-loader": "^6.7.1",
     "eslint": "^8.26.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
@@ -61,6 +64,7 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.7.1",
-    "sass": "^1.55.0"
+    "sass": "^1.55.0",
+    "style-loader": "^3.3.1"
   }
 }

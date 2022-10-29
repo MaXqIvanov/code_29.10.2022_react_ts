@@ -1,0 +1,26 @@
+$background_second: #27272A;
+$background_main: #202124;
+$main_color: #FFFFFF;
+$second_color: #A1A1AA;
+$border_main: #414144;
+
+.cmp_body{
+    width: calc(100% - 236px);
+}
+.header_component{
+    height: 45px;
+    width: 100%;
+    display: flex;
+    background-color: $background_second;
+    box-sizing: border-box;
+    border-bottom: 1px solid $border_main;
+}
+.header_component_title{
+    min-width: 312px;
+    width: fit-content;
+    box-sizing: border-box;
+    border-right: 1px solid $border_main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
