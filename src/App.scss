@@ -6,6 +6,20 @@ $main_color: #FFFFFF;
 $second_color: #A1A1AA;
 $border_main: #414144;
 
+*::-webkit-scrollbar {
+  width: 8px; /* ширина scrollbar */
+  height: 9px;
+}
+*::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255); /* цвет дорожки */
+  border-radius: 25px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #b3e3fb; /* цвет плашки */
+  border-radius: 0px; /* закругления плашки */
+  border: 3px solid #b3e3fb;  /* padding вокруг плашки */
+}
+
 .app{
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
