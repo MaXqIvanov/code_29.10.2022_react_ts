@@ -47,7 +47,7 @@ export const SideBar = () => {
     {
       id: 9,
       title: 'Кап вложения',
-      route: '/capital investments',
+      route: '/capital_investments',
     },
     {
       id: 10,
