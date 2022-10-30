@@ -1,28 +1,7 @@
 export type stringState = {
   loading: boolean;
-  stringAll: Array<
-    | {
-        child: [null];
-        equipmentCosts: number;
-        estimatedProfit: number;
-        id: number;
-        machineOperatorSalary: number;
-        mainCosts: number;
-        materials: number;
-        mimExploitation: number;
-        overheads: number;
-        rowName: 'string';
-        salary: number;
-        supportCosts: number;
-        total: number;
-      }
-    | any
-  >;
-};
-
-export type getString = Array<
-  | {
-      child: [null];
+  stringAll: Array<{
+    child: Array<{
       equipmentCosts: number;
       estimatedProfit: number;
       id: number;
@@ -31,16 +10,69 @@ export type getString = Array<
       materials: number;
       mimExploitation: number;
       overheads: number;
-      rowName: 'string';
+      rowName: string;
       salary: number;
       supportCosts: number;
       total: number;
-    }
-  | Array<null>
->;
+      child: Array<{
+        equipmentCosts: number;
+        estimatedProfit: number;
+        id: number;
+        machineOperatorSalary: number;
+        mainCosts: number;
+        materials: number;
+        mimExploitation: number;
+        overheads: number;
+        rowName: string;
+        salary: number;
+        supportCosts: number;
+        total: number;
+      }>;
+    }>;
+    equipmentCosts: number;
+    estimatedProfit: number;
+    id: number;
+    machineOperatorSalary: number;
+    mainCosts: number;
+    materials: number;
+    mimExploitation: number;
+    overheads: number;
+    rowName: string;
+    salary: number;
+    supportCosts: number;
+    total: number;
+  }>;
+};
 
-export type getNewString = {
-  child: [null];
+export type getString = Array<{
+  child: Array<{
+    equipmentCosts: number;
+    estimatedProfit: number;
+    id: number;
+    machineOperatorSalary: number;
+    mainCosts: number;
+    materials: number;
+    mimExploitation: number;
+    overheads: number;
+    rowName: string;
+    salary: number;
+    supportCosts: number;
+    total: number;
+    child: Array<{
+      equipmentCosts: number;
+      estimatedProfit: number;
+      id: number;
+      machineOperatorSalary: number;
+      mainCosts: number;
+      materials: number;
+      mimExploitation: number;
+      overheads: number;
+      rowName: string;
+      salary: number;
+      supportCosts: number;
+      total: number;
+    }>;
+  }>;
   equipmentCosts: number;
   estimatedProfit: number;
   id: number;
@@ -49,7 +81,93 @@ export type getNewString = {
   materials: number;
   mimExploitation: number;
   overheads: number;
-  rowName: 'string';
+  rowName: string;
+  salary: number;
+  supportCosts: number;
+  total: number;
+}>;
+
+export type typeAllString = {
+  child: Array<{
+    equipmentCosts: number;
+    estimatedProfit: number;
+    id: number;
+    machineOperatorSalary: number;
+    mainCosts: number;
+    materials: number;
+    mimExploitation: number;
+    overheads: number;
+    rowName: string;
+    salary: number;
+    supportCosts: number;
+    total: number;
+    child: Array<{
+      equipmentCosts: number;
+      estimatedProfit: number;
+      id: number;
+      machineOperatorSalary: number;
+      mainCosts: number;
+      materials: number;
+      mimExploitation: number;
+      overheads: number;
+      rowName: string;
+      salary: number;
+      supportCosts: number;
+      total: number;
+    }>;
+  }>;
+  equipmentCosts: number;
+  estimatedProfit: number;
+  id: number;
+  machineOperatorSalary: number;
+  mainCosts: number;
+  materials: number;
+  mimExploitation: number;
+  overheads: number;
+  rowName: string;
+  salary: number;
+  supportCosts: number;
+  total: number;
+};
+
+export type typeSubString = {
+  child: Array<{
+    equipmentCosts: number;
+    estimatedProfit: number;
+    id: number;
+    machineOperatorSalary: number;
+    mainCosts: number;
+    materials: number;
+    mimExploitation: number;
+    overheads: number;
+    rowName: string;
+    salary: number;
+    supportCosts: number;
+    total: number;
+  }>;
+  equipmentCosts: number;
+  estimatedProfit: number;
+  id: number;
+  machineOperatorSalary: number;
+  mainCosts: number;
+  materials: number;
+  mimExploitation: number;
+  overheads: number;
+  rowName: string;
+  salary: number;
+  supportCosts: number;
+  total: number;
+};
+export type typeLastString = {
+  equipmentCosts: number;
+  estimatedProfit: number;
+  id: number;
+  machineOperatorSalary: number;
+  mainCosts: number;
+  materials: number;
+  mimExploitation: number;
+  overheads: number;
+  rowName: string;
   salary: number;
   supportCosts: number;
   total: number;

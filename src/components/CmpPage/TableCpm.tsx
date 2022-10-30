@@ -3,13 +3,15 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/redux';
 import { RootState } from '../../store/store';
 import { createRowInEntity, deleteRow, updateRowInEntity } from '../../store/stringSlice';
-import { getNewString, getString } from '../../ts';
+import { typeLastString, typeSubString, typeAllString } from '../../ts';
 
 export const TableCpm = () => {
   const { stringAll } = useSelector((state: RootState) => state.string);
   const dispatch = useAppDispatch();
   const [currentHoverString, setCurrentHoverString] = useState<number | null | undefined>(null);
-  const [currentEditString, setCurrentEditString] = useState<any>(null);
+  const [currentEditString, setCurrentEditString] = useState<
+    typeAllString | typeSubString | typeLastString | null
+  >(null);
   const [name, setName] = useState<string>('');
   const [salary, setSalary] = useState<number>(0);
   const [equipment, setEquipment] = useState<number>(0);
@@ -41,7 +43,7 @@ export const TableCpm = () => {
         </thead>
         <tbody>
           {stringAll?.length > 0 ? (
-            stringAll.map((elem: getNewString | any, index: number) => (
+            stringAll.map((elem: typeAllString, index: number) => (
               <>
                 <tr
                   onDoubleClick={() => setCurrentEditString(elem)}
@@ -265,7 +267,7 @@ export const TableCpm = () => {
                   <div className={'separate_line'}></div>
                 </tr>
                 {elem.child?.length > 0 &&
-                  elem.child.map((subString: getNewString | null, index2: number) => (
+                  elem.child.map((subString: typeSubString | null, index2: number) => (
                     <>
                       <tr
                         onDoubleClick={() => setCurrentEditString(subString)}
@@ -501,7 +503,7 @@ export const TableCpm = () => {
                       </tr>
                       {subString !== null &&
                         subString.child?.length > 0 &&
-                        subString.child.map((lastString: getNewString | null, index3: number) => (
+                        subString.child.map((lastString: typeLastString, index3: number) => (
                           <tr
                             className={'btn_text_field_elem'}
                             key={lastString?.id}
