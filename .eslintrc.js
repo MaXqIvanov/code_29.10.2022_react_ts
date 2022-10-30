@@ -34,6 +34,15 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'new-cap': 0,
     'no-unused-vars': 0,
-    '@typescript-eslint/no-unused-vars': 'off'
+    '@typescript-eslint/no-unused-vars': 'off',
+    'endOfLine': 'off',
+    "import/no-unresolved": "off",
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".scss"]
+      }
+    }
   },
 };

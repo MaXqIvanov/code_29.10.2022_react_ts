@@ -15,6 +15,8 @@ export const Header = () => {
 
   return (
     <div className={'header'}>
+      <div className={'menu_btn_icon'}></div>
+      <div className={'back_btn_icon'}></div>
       {navHeader.map((elem: { id: number; title: string }) => (
         <div
           onClick={() => setCurrentNavHeader(elem.id)}

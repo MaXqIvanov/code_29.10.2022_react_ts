@@ -1,0 +1,227 @@
+$background_second: #27272A;
+$background_main: #202124;
+$main_color: #FFFFFF;
+$second_color: #A1A1AA;
+$border_main: #414144;
+
+.cmp_body{
+    width: calc(100% - 236px);
+}
+.header_component{
+    height: 45px;
+    width: 100%;
+    display: flex;
+    background-color: $background_second;
+    box-sizing: border-box;
+    border-bottom: 1px solid $border_main;
+}
+.header_component_title{
+    min-width: 312px;
+    width: fit-content;
+    box-sizing: border-box;
+    border-right: 1px solid $border_main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// work width table component
+.table_wrapper{
+    margin: 10px 11px;
+}
+.table{
+    width: 100%;
+    thead{
+        position: relative;
+        height: 30px;
+        color: $second_color;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.1px;
+        th{
+            padding: 5px;
+            padding-top: 0px;
+            font-weight: 400;
+            height: 30px;
+            text-align: left;
+        }
+    }
+}
+.separate_line{
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border-bottom: 1px solid $border_main;
+}
+.empty_string_array{
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.group_btn{
+    display: flex;
+}
+.btn_field_1{
+    height: 20px;
+    width: 23px;
+    background-image: url('../assets/folder_1.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+.btn_field_2{
+    height: 20px;
+    width: 23px;
+    background-image: url('../assets/folder_2.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 8px;
+    cursor: pointer;
+}
+.btn_text_field{
+    height: 20px;
+    width: 23px;
+    background-image: url('../assets/folder_3.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 8px;
+    cursor: pointer;
+}
+.btn_delete{
+    margin-top: 3px;
+    height: 17px;
+    width: 17px;
+    background-image: url('../assets/TrashFill.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.string_elem{
+    position: relative;
+    height: 60px;
+    border-bottom: 1px solid $border_main;
+    box-sizing: border-box;
+    td{
+        padding: 5px;
+    }
+}
+.visible_all_btn{
+    position: relative;
+    max-width: fit-content;
+    width: fit-content;
+    display: flex;
+    border-radius: 6px;
+    background: $border_main;
+    padding: 6px;
+    margin-top: -2px;
+    z-index: 9;
+}
+.not_visible_all_btn{
+    position: relative;
+    margin-top: -2px;
+    padding: 6px;
+    z-index: 9;
+}
+.cell_btn{
+    max-width: 120px;
+    min-width: 120px;
+    position: relative;
+}
+.substring_elem{
+    margin-left: 10px;
+    position: relative;
+    height: 60px;
+    border-bottom: 1px solid $border_main;
+    box-sizing: border-box;
+    td{
+        padding: 5px;
+    }
+    .visible_all_btn{
+        position: relative;
+        max-width: fit-content;
+        width: fit-content;
+        display: flex;
+        border-radius: 6px;
+        background: $border_main;
+        padding: 6px;
+        padding-left: 0px;
+        margin-left: 24px;
+        margin-top: -2px;
+        z-index: 9;
+    }
+    .not_visible_all_btn{
+        padding: 6px;
+        padding-left: 0px;
+        margin-left: 24px;
+        margin-top: -2px;
+    }
+}
+.link_line{
+    position: absolute;
+    // top: -24px;
+    left: 20px;
+    width: 1px;
+    background: #C6C6C6;
+    height: 56px;
+    z-index: 0;
+    // transform: translate(-50% , -50%);
+}
+.link_line_horizontal{
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    height: 1px;
+    width: 20px;
+    background: #C6C6C6;
+    z-index: 0;
+}
+.btn_text_field_elem{
+    margin-left: 10px;
+    position: relative;
+    height: 60px;
+    border-bottom: 1px solid $border_main;
+    box-sizing: border-box;
+    td{
+        padding: 5px;
+    }
+    .visible_all_btn{
+        position: relative;
+        max-width: fit-content;
+        width: fit-content;
+        display: flex;
+        border-radius: 6px;
+        background: $border_main;
+        padding: 6px;
+        padding-left: 0px;
+        margin-left: 52px;
+        margin-top: -2px;
+        z-index: 9;
+    }
+    .not_visible_all_btn{
+        padding: 6px;
+        padding-left: 0px;
+        margin-left: 52px;
+        margin-top: -2px;
+    }
+    .link_line{
+        position: absolute;
+        left: 48px;
+        width: 1px;
+        background: #C6C6C6;
+        height: 56px;
+        z-index: 0;
+    }
+    .link_line_horizontal{
+        position: absolute;
+        top: 30px;
+        left: 48px;
+        height: 1px;
+        width: 20px;
+        background: #C6C6C6;
+        z-index: 0;
+    }
+}
