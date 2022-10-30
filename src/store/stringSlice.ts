@@ -285,7 +285,10 @@ const stringSlice = createSlice({
             sub_string_index: number;
             last_string_index: number;
           };
-          response: { data: { current: typeAllString; changed: Array<typeLastString> }; status: number };
+          response: {
+            data: { current: typeAllString; changed: Array<typeLastString> };
+            status: number;
+          };
         }>
       ) => {
         console.log(payload);
