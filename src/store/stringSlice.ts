@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import api from '../plugins/axios/api';
 import Cookies from 'js-cookie';
-import { getNewString, getString, stringState } from '../ts';
+import { getString, stringState, typeAllString } from '../ts';
 import { Params } from 'react-router-dom';
 
 export const getSpecialKey = createAsyncThunk('auth/getString', async () => {
@@ -43,9 +43,44 @@ export const deleteRow = createAsyncThunk(
     string: number;
     index: number;
     sub_string_index: number;
+    last_string_index: number;
   }) => {
     const response = await api.delete(
       `/v1/outlay-rows/entity/${Cookies.get('eID')}/row/${params.id}/delete`
+    );
+    return { response, params };
+  }
+);
+export const updateRowInEntity = createAsyncThunk(
+  'auth/updateRowInEntity',
+  async (params: {
+    id: number;
+    parentId: number | null;
+    string: number;
+    index: number;
+    sub_string_index: number;
+    rowName: string;
+    salary: number;
+    equipmentCosts: number;
+    estimatedProfit: number;
+    overheads: number;
+    last_string_index: number;
+  }) => {
+    const response = await api.post(
+      `/v1/outlay-rows/entity/${Cookies.get('eID')}/row/${params.id}/update`,
+      {
+        equipmentCosts: params.equipmentCosts,
+        estimatedProfit: params.estimatedProfit,
+        machineOperatorSalary: 0,
+        mainCosts: 0,
+        materials: 0,
+        mimExploitation: 0,
+        overheads: params.overheads,
+        parentId: params.parentId,
+        rowName: params.rowName,
+        salary: params.salary,
+        supportCosts: 0,
+      }
     );
     return { response, params };
   }
@@ -82,10 +117,15 @@ const stringSlice = createSlice({
     });
     builder.addCase(
       getTreeRows.fulfilled,
-      (state: stringState, { payload }: PayloadAction<{ response: { data: getString } }>) => {
+      (
+        state: stringState,
+        { payload }: PayloadAction<{ response: { data: getString; status: number } }>
+      ) => {
         console.log(payload);
+        if (payload.response.status < 300) {
+          state.stringAll = payload.response.data;
+        }
         state.loading = false;
-        state.stringAll = payload.response.data;
       }
     );
     builder.addCase(getTreeRows.rejected, (state: stringState) => {
@@ -108,28 +148,30 @@ const stringSlice = createSlice({
             index: number;
             sub_string_index: number;
           };
-          response: { data: { current: getNewString } };
+          response: { data: { current: typeAllString }; status: number };
         }>
       ) => {
         console.log(payload);
+        if (payload.response.status < 300) {
+          if (payload.params.string === 0) {
+            const response = { ...payload.response.data.current, child: [] };
+            state.stringAll = [...state.stringAll, response];
+          }
+          if (payload.params.string === 1) {
+            const response = { ...payload.response.data.current, child: [] };
+            state.stringAll[payload.params.index].child = [
+              ...state.stringAll[payload.params.index].child,
+              response,
+            ];
+          }
+          if (payload.params.string === 2) {
+            state.stringAll[payload.params.index].child[payload.params.sub_string_index].child = [
+              ...state.stringAll[payload.params.index].child[payload.params.sub_string_index].child,
+              payload.response.data.current,
+            ];
+          }
+        }
         state.loading = false;
-        if (payload.params.string === 0) {
-          const response = { ...payload.response.data.current, child: [] };
-          state.stringAll = [...state.stringAll, response];
-        }
-        if (payload.params.string === 1) {
-          const response = { ...payload.response.data.current, child: [] };
-          state.stringAll[payload.params.index].child = [
-            ...state.stringAll[payload.params.index].child,
-            response,
-          ];
-        }
-        if (payload.params.string === 2) {
-          state.stringAll[payload.params.index].child[payload.params.sub_string_index].child = [
-            ...state.stringAll[payload.params.index].child[payload.params.sub_string_index].child,
-            payload.response.data.current,
-          ];
-        }
       }
     );
     builder.addCase(createRowInEntity.rejected, (state: stringState) => {
@@ -151,21 +193,103 @@ const stringSlice = createSlice({
             string: number;
             index: number;
             sub_string_index: number;
+            last_string_index: number;
           };
-          response: { data: getString };
+          response: { data: { changed: any }; status: number };
         }>
       ) => {
-        console.log(payload);
-        if (payload.params.string === 0) {
-          state.stringAll.splice(payload.params.index, 1);
-        }
-        if (payload.params.string === 1) {
-          state.stringAll[payload.params.index].child[payload.params.sub_string_index].child = [];
-          state.stringAll[payload.params.index].child.splice(payload.params.sub_string_index, 1);
+        if (payload.response.status < 300) {
+          if (payload.params.string === 0) {
+            state.stringAll.splice(payload.params.index, 1);
+          }
+          if (payload.params.string === 1) {
+            state.stringAll[payload.params.index].child.splice(payload.params.sub_string_index, 1);
+            state.stringAll[payload.params.index] = {
+              ...state.stringAll[payload.params.index],
+              ...payload.response.data.changed[0],
+            };
+          }
+          if (payload.params.string === 2) {
+            state.stringAll[payload.params.index] = {
+              ...state.stringAll[payload.params.index],
+              ...payload.response.data.changed[1],
+            };
+            state.stringAll[payload.params.index].child[payload.params.sub_string_index] = {
+              ...state.stringAll[payload.params.index].child[payload.params.sub_string_index],
+              ...payload.response.data.changed[0],
+            };
+            state.stringAll[payload.params.index].child[
+              payload.params.sub_string_index
+            ].child.splice(payload.params.last_string_index, 1);
+          }
         }
       }
     );
     builder.addCase(deleteRow.rejected, (state: stringState) => {
+      state.loading = false;
+    });
+    // updateRowInEntity
+    builder.addCase(updateRowInEntity.pending, (state: stringState, action: PayloadAction) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      updateRowInEntity.fulfilled,
+      (
+        state: stringState,
+        {
+          payload,
+        }: PayloadAction<{
+          params: {
+            parentId: number | null;
+            string: number;
+            index: number;
+            sub_string_index: number;
+            last_string_index: number;
+          };
+          response: { data: { current: typeAllString; changed: any }; status: number };
+        }>
+      ) => {
+        console.log(payload);
+        if (payload.response.status < 300) {
+          if (payload.params.string === 0) {
+            state.stringAll[payload.params.index] = {
+              ...state.stringAll[payload.params.index],
+              ...payload.response.data.current,
+            };
+          }
+          if (payload.params.string === 1) {
+            state.stringAll[payload.params.index] = {
+              ...state.stringAll[payload.params.index],
+              ...payload.response.data.changed[0],
+            };
+            state.stringAll[payload.params.index].child[payload.params.sub_string_index] = {
+              ...state.stringAll[payload.params.index].child[payload.params.sub_string_index],
+              ...payload.response.data.current,
+            };
+          }
+          if (payload.params.string === 2) {
+            state.stringAll[payload.params.index] = {
+              ...state.stringAll[payload.params.index],
+              ...payload.response.data.changed[1],
+            };
+            state.stringAll[payload.params.index].child[payload.params.sub_string_index] = {
+              ...state.stringAll[payload.params.index].child[payload.params.sub_string_index],
+              ...payload.response.data.changed[0],
+            };
+            state.stringAll[payload.params.index].child[payload.params.sub_string_index].child[
+              payload.params.last_string_index
+            ] = {
+              ...state.stringAll[payload.params.index].child[payload.params.sub_string_index].child[
+                payload.params.last_string_index
+              ],
+              ...payload.response.data.current,
+            };
+          }
+        }
+        state.loading = false;
+      }
+    );
+    builder.addCase(updateRowInEntity.rejected, (state: stringState) => {
       state.loading = false;
     });
   },

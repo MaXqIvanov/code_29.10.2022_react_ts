@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/redux';
 import { RootState } from '../../store/store';
-import { createRowInEntity, deleteRow } from '../../store/stringSlice';
-import { getNewString, getString } from '../../ts';
+import { createRowInEntity, deleteRow, updateRowInEntity } from '../../store/stringSlice';
+import { typeLastString, typeSubString, typeAllString } from '../../ts';
 
 export const TableCpm = () => {
   const { stringAll } = useSelector((state: RootState) => state.string);
   const dispatch = useAppDispatch();
-  const [currentHoverString, setCurrentHoverString] = useState<Number | null | undefined>(null);
+  const [currentHoverString, setCurrentHoverString] = useState<number | null | undefined>(null);
+  const [currentEditString, setCurrentEditString] = useState<
+    typeAllString | typeSubString | typeLastString | null
+  >(null);
+  const [name, setName] = useState<string>('');
+  const [salary, setSalary] = useState<number>(0);
+  const [equipment, setEquipment] = useState<number>(0);
+  const [expenses, setExpenses] = useState<number>(0);
+  const [projit, setProjit] = useState<number>(0);
+  useEffect(() => {
+    if (currentEditString !== null) {
+      setName(currentEditString.rowName);
+      setSalary(currentEditString.salary);
+      setEquipment(currentEditString.equipmentCosts);
+      setExpenses(currentEditString.overheads);
+      setProjit(currentEditString.estimatedProfit);
+    }
+  }, [currentEditString]);
+
   return (
     <div className={'table_wrapper'}>
       <table className={'table'}>
@@ -25,9 +43,13 @@ export const TableCpm = () => {
         </thead>
         <tbody>
           {stringAll?.length > 0 ? (
-            stringAll.map((elem: getNewString | any, index: number) => (
+            stringAll.map((elem: typeAllString, index: number) => (
               <>
-                <tr className={'string_elem'} key={elem.id}>
+                <tr
+                  onDoubleClick={() => setCurrentEditString(elem)}
+                  className={'string_elem'}
+                  key={elem.id}
+                >
                   <td
                     onMouseEnter={() => setCurrentHoverString(elem.id)}
                     onMouseLeave={() => setCurrentHoverString(null)}
@@ -77,6 +99,7 @@ export const TableCpm = () => {
                                   string: 0,
                                   index: index,
                                   sub_string_index: 0,
+                                  last_string_index: 0,
                                 })
                               )
                             }
@@ -87,17 +110,170 @@ export const TableCpm = () => {
                       )}
                     </div>
                   </td>
-                  <td>{elem.rowName}</td>
-                  <td>{elem.salary}</td>
-                  <td scope="row">{elem.equipmentCosts}</td>
-                  <td>{elem.overheads}</td>
-                  <td>{elem.estimatedProfit}</td>
+                  <td title={'Двойное нажатие для редактирования'}>
+                    {currentEditString?.id === elem.id ? (
+                      <input
+                        onKeyDown={(e) =>
+                          e.code === 'Enter' &&
+                          dispatch(
+                            updateRowInEntity({
+                              rowName: name,
+                              equipmentCosts: equipment,
+                              estimatedProfit: projit,
+                              salary: salary,
+                              overheads: expenses,
+                              id: elem.id,
+                              index: index,
+                              parentId: null,
+                              string: 0,
+                              sub_string_index: 0,
+                              last_string_index: 0,
+                            })
+                          )
+                        }
+                        title={'Enter для отпрвки данных'}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className={'input_edit'}
+                      />
+                    ) : (
+                      elem.rowName
+                    )}
+                  </td>
+                  <td title={'Двойное нажатие для редактирования'}>
+                    {currentEditString?.id === elem.id ? (
+                      <input
+                        onKeyDown={(e) =>
+                          e.code === 'Enter' &&
+                          dispatch(
+                            updateRowInEntity({
+                              rowName: name,
+                              equipmentCosts: equipment,
+                              estimatedProfit: projit,
+                              salary: salary,
+                              overheads: expenses,
+                              id: elem.id,
+                              index: index,
+                              parentId: null,
+                              string: 0,
+                              sub_string_index: 0,
+                              last_string_index: 0,
+                            })
+                          )
+                        }
+                        title={'Enter для отпрвки данных'}
+                        value={salary}
+                        className={'input_edit input_number'}
+                        type={'number'}
+                        onChange={(e) => setSalary(Number(e.target.value))}
+                      />
+                    ) : (
+                      elem.salary
+                    )}
+                  </td>
+                  <td title={'Двойное нажатие для редактирования'}>
+                    {currentEditString?.id === elem.id ? (
+                      <input
+                        onKeyDown={(e) =>
+                          e.code === 'Enter' &&
+                          dispatch(
+                            updateRowInEntity({
+                              rowName: name,
+                              equipmentCosts: equipment,
+                              estimatedProfit: projit,
+                              salary: salary,
+                              overheads: expenses,
+                              id: elem.id,
+                              index: index,
+                              parentId: null,
+                              string: 0,
+                              sub_string_index: 0,
+                              last_string_index: 0,
+                            })
+                          )
+                        }
+                        title={'Enter для отпрвки данных'}
+                        value={equipment}
+                        className={'input_edit input_number'}
+                        type={'number'}
+                        onChange={(e) => setEquipment(Number(e.target.value))}
+                      />
+                    ) : (
+                      elem.equipmentCosts
+                    )}
+                  </td>
+                  <td title={'Двойное нажатие для редактирования'}>
+                    {currentEditString?.id === elem.id ? (
+                      <input
+                        onKeyDown={(e) =>
+                          e.code === 'Enter' &&
+                          dispatch(
+                            updateRowInEntity({
+                              rowName: name,
+                              equipmentCosts: equipment,
+                              estimatedProfit: projit,
+                              salary: salary,
+                              overheads: expenses,
+                              id: elem.id,
+                              index: index,
+                              parentId: null,
+                              string: 0,
+                              sub_string_index: 0,
+                              last_string_index: 0,
+                            })
+                          )
+                        }
+                        title={'Enter для отпрвки данных'}
+                        value={expenses}
+                        className={'input_edit input_number'}
+                        type={'number'}
+                        onChange={(e) => setExpenses(Number(e.target.value))}
+                      />
+                    ) : (
+                      elem.overheads
+                    )}
+                  </td>
+                  <td title={'Двойное нажатие для редактирования'}>
+                    {currentEditString?.id === elem.id ? (
+                      <input
+                        onKeyDown={(e) =>
+                          e.code === 'Enter' &&
+                          dispatch(
+                            updateRowInEntity({
+                              rowName: name,
+                              equipmentCosts: equipment,
+                              estimatedProfit: projit,
+                              salary: salary,
+                              overheads: expenses,
+                              id: elem.id,
+                              index: index,
+                              parentId: null,
+                              string: 0,
+                              sub_string_index: 0,
+                              last_string_index: 0,
+                            })
+                          )
+                        }
+                        title={'Enter для отпрвки данных'}
+                        value={projit}
+                        className={'input_edit input_number'}
+                        type={'number'}
+                        onChange={(e) => setProjit(Number(e.target.value))}
+                      />
+                    ) : (
+                      elem.estimatedProfit
+                    )}
+                  </td>
                   <div className={'separate_line'}></div>
                 </tr>
                 {elem.child?.length > 0 &&
-                  elem.child.map((subString: getNewString | null, index2: number) => (
+                  elem.child.map((subString: typeSubString | null, index2: number) => (
                     <>
-                      <tr className={'substring_elem'} key={subString?.id}>
+                      <tr
+                        onDoubleClick={() => setCurrentEditString(subString)}
+                        className={'substring_elem'}
+                        key={subString?.id}
+                      >
                         <td
                           onMouseEnter={() => setCurrentHoverString(subString?.id)}
                           onMouseLeave={() => setCurrentHoverString(null)}
@@ -108,7 +284,7 @@ export const TableCpm = () => {
                               bottom: index2 !== 0 ? '30px' : '30px',
                               height:
                                 index2 !== 0
-                                  ? `calc(61px * ${elem.child[index2 - 1].child.length + 1})`
+                                  ? `calc(62px * ${elem.child[index2 - 1].child.length + 1})`
                                   : '54px',
                             }}
                             className={'link_line'}
@@ -158,6 +334,7 @@ export const TableCpm = () => {
                                         string: 1,
                                         index: index,
                                         sub_string_index: index2,
+                                        last_string_index: 0,
                                       })
                                     )
                                   }
@@ -168,17 +345,170 @@ export const TableCpm = () => {
                             )}
                           </div>
                         </td>
-                        <td>{subString?.rowName}</td>
-                        <td>{subString?.salary}</td>
-                        <td>{subString?.equipmentCosts}</td>
-                        <td>{subString?.overheads}</td>
-                        <td>{subString?.estimatedProfit}</td>
+                        <td title={'Двойное нажатие для редактирования'}>
+                          {currentEditString?.id === subString?.id ? (
+                            <input
+                              onKeyDown={(e) =>
+                                e.code === 'Enter' &&
+                                dispatch(
+                                  updateRowInEntity({
+                                    rowName: name,
+                                    equipmentCosts: equipment,
+                                    estimatedProfit: projit,
+                                    salary: salary,
+                                    overheads: expenses,
+                                    id: subString!.id,
+                                    index: index,
+                                    parentId: elem.id,
+                                    string: 1,
+                                    sub_string_index: index2,
+                                    last_string_index: 0,
+                                  })
+                                )
+                              }
+                              title={'Enter для отпрвки данных'}
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              className={'input_edit'}
+                            />
+                          ) : (
+                            subString?.rowName
+                          )}
+                        </td>
+                        <td title={'Двойное нажатие для редактирования'}>
+                          {currentEditString?.id === subString?.id ? (
+                            <input
+                              onKeyDown={(e) =>
+                                e.code === 'Enter' &&
+                                dispatch(
+                                  updateRowInEntity({
+                                    rowName: name,
+                                    equipmentCosts: equipment,
+                                    estimatedProfit: projit,
+                                    salary: salary,
+                                    overheads: expenses,
+                                    id: subString!.id,
+                                    index: index,
+                                    parentId: elem.id,
+                                    string: 1,
+                                    sub_string_index: index2,
+                                    last_string_index: 0,
+                                  })
+                                )
+                              }
+                              title={'Enter для отпрвки данных'}
+                              value={salary}
+                              className={'input_edit input_number'}
+                              type={'number'}
+                              onChange={(e) => setSalary(Number(e.target.value))}
+                            />
+                          ) : (
+                            subString?.salary
+                          )}
+                        </td>
+                        <td title={'Двойное нажатие для редактирования'}>
+                          {currentEditString?.id === subString?.id ? (
+                            <input
+                              onKeyDown={(e) =>
+                                e.code === 'Enter' &&
+                                dispatch(
+                                  updateRowInEntity({
+                                    rowName: name,
+                                    equipmentCosts: equipment,
+                                    estimatedProfit: projit,
+                                    salary: salary,
+                                    overheads: expenses,
+                                    id: subString!.id,
+                                    index: index,
+                                    parentId: elem.id,
+                                    string: 1,
+                                    sub_string_index: index2,
+                                    last_string_index: 0,
+                                  })
+                                )
+                              }
+                              title={'Enter для отпрвки данных'}
+                              value={equipment}
+                              className={'input_edit input_number'}
+                              type={'number'}
+                              onChange={(e) => setEquipment(Number(e.target.value))}
+                            />
+                          ) : (
+                            subString?.equipmentCosts
+                          )}
+                        </td>
+                        <td title={'Двойное нажатие для редактирования'}>
+                          {currentEditString?.id === subString?.id ? (
+                            <input
+                              onKeyDown={(e) =>
+                                e.code === 'Enter' &&
+                                dispatch(
+                                  updateRowInEntity({
+                                    rowName: name,
+                                    equipmentCosts: equipment,
+                                    estimatedProfit: projit,
+                                    salary: salary,
+                                    overheads: expenses,
+                                    id: subString!.id,
+                                    index: index,
+                                    parentId: elem.id,
+                                    string: 1,
+                                    sub_string_index: index2,
+                                    last_string_index: 0,
+                                  })
+                                )
+                              }
+                              title={'Enter для отпрвки данных'}
+                              value={expenses}
+                              className={'input_edit input_number'}
+                              type={'number'}
+                              onChange={(e) => setExpenses(Number(e.target.value))}
+                            />
+                          ) : (
+                            subString?.overheads
+                          )}
+                        </td>
+                        <td title={'Двойное нажатие для редактирования'}>
+                          {currentEditString?.id === subString?.id ? (
+                            <input
+                              onKeyDown={(e) =>
+                                e.code === 'Enter' &&
+                                dispatch(
+                                  updateRowInEntity({
+                                    rowName: name,
+                                    equipmentCosts: equipment,
+                                    estimatedProfit: projit,
+                                    salary: salary,
+                                    overheads: expenses,
+                                    id: subString!.id,
+                                    index: index,
+                                    parentId: elem.id,
+                                    string: 1,
+                                    sub_string_index: index2,
+                                    last_string_index: 0,
+                                  })
+                                )
+                              }
+                              title={'Enter для отпрвки данных'}
+                              value={projit}
+                              className={'input_edit input_number'}
+                              type={'number'}
+                              onChange={(e) => setProjit(Number(e.target.value))}
+                            />
+                          ) : (
+                            subString?.estimatedProfit
+                          )}
+                        </td>
                         <div className={'separate_line'}></div>
                       </tr>
                       {subString !== null &&
                         subString.child?.length > 0 &&
-                        subString.child.map((lastString: getNewString | null, index3: number) => (
-                          <tr className={'btn_text_field_elem'} key={lastString?.id}>
+                        subString.child.map((lastString: typeLastString, index3: number) => (
+                          <tr
+                            className={'btn_text_field_elem'}
+                            key={lastString?.id}
+                            onDoubleClick={() => setCurrentEditString(lastString)}
+                          >
                             <td
                               onMouseEnter={() => setCurrentHoverString(lastString?.id)}
                               onMouseLeave={() => setCurrentHoverString(null)}
@@ -210,7 +540,7 @@ export const TableCpm = () => {
                                       })
                                     )
                                   }
-                                  title={'Создать подстроку'}
+                                  title={'Создать обычную строку'}
                                   className={'btn_text_field'}
                                 ></div>
                                 {currentHoverString === lastString?.id && (
@@ -219,25 +549,175 @@ export const TableCpm = () => {
                                       onClick={() =>
                                         dispatch(
                                           deleteRow({
-                                            id: subString?.id,
+                                            id: lastString?.id,
                                             string: 2,
                                             index: index,
                                             sub_string_index: index2,
+                                            last_string_index: index3,
                                           })
                                         )
                                       }
-                                      title={'Удалить подстроку'}
+                                      title={'Удалить обычную строку'}
                                       className={'btn_delete'}
                                     ></div>
                                   </>
                                 )}
                               </div>
                             </td>
-                            <td>{subString?.rowName}</td>
-                            <td>{subString?.salary}</td>
-                            <td>{subString?.equipmentCosts}</td>
-                            <td>{subString?.overheads}</td>
-                            <td>{subString?.estimatedProfit}</td>
+                            <td title={'Двойное нажатие для редактирования'}>
+                              {currentEditString?.id === lastString?.id ? (
+                                <input
+                                  onKeyDown={(e) =>
+                                    e.code === 'Enter' &&
+                                    dispatch(
+                                      updateRowInEntity({
+                                        rowName: name,
+                                        equipmentCosts: equipment,
+                                        estimatedProfit: projit,
+                                        salary: salary,
+                                        overheads: expenses,
+                                        id: lastString!.id,
+                                        index: index,
+                                        parentId: subString.id,
+                                        string: 2,
+                                        sub_string_index: index2,
+                                        last_string_index: index3,
+                                      })
+                                    )
+                                  }
+                                  title={'Enter для отпрвки данных'}
+                                  value={name}
+                                  onChange={(e) => setName(e.target.value)}
+                                  className={'input_edit'}
+                                />
+                              ) : (
+                                lastString?.rowName
+                              )}
+                            </td>
+                            <td title={'Двойное нажатие для редактирования'}>
+                              {currentEditString?.id === lastString?.id ? (
+                                <input
+                                  onKeyDown={(e) =>
+                                    e.code === 'Enter' &&
+                                    dispatch(
+                                      updateRowInEntity({
+                                        rowName: name,
+                                        equipmentCosts: equipment,
+                                        estimatedProfit: projit,
+                                        salary: salary,
+                                        overheads: expenses,
+                                        id: lastString!.id,
+                                        index: index,
+                                        parentId: subString.id,
+                                        string: 2,
+                                        sub_string_index: index2,
+                                        last_string_index: index3,
+                                      })
+                                    )
+                                  }
+                                  title={'Enter для отпрвки данных'}
+                                  value={salary}
+                                  className={'input_edit input_number'}
+                                  type={'number'}
+                                  onChange={(e) => setSalary(Number(e.target.value))}
+                                />
+                              ) : (
+                                lastString?.salary
+                              )}
+                            </td>
+                            <td title={'Двойное нажатие для редактирования'}>
+                              {currentEditString?.id === lastString?.id ? (
+                                <input
+                                  onKeyDown={(e) =>
+                                    e.code === 'Enter' &&
+                                    dispatch(
+                                      updateRowInEntity({
+                                        rowName: name,
+                                        equipmentCosts: equipment,
+                                        estimatedProfit: projit,
+                                        salary: salary,
+                                        overheads: expenses,
+                                        id: lastString!.id,
+                                        index: index,
+                                        parentId: subString.id,
+                                        string: 2,
+                                        sub_string_index: index2,
+                                        last_string_index: index3,
+                                      })
+                                    )
+                                  }
+                                  title={'Enter для отпрвки данных'}
+                                  value={equipment}
+                                  className={'input_edit input_number'}
+                                  type={'number'}
+                                  onChange={(e) => setEquipment(Number(e.target.value))}
+                                />
+                              ) : (
+                                lastString?.equipmentCosts
+                              )}
+                            </td>
+                            <td title={'Двойное нажатие для редактирования'}>
+                              {currentEditString?.id === lastString?.id ? (
+                                <input
+                                  onKeyDown={(e) =>
+                                    e.code === 'Enter' &&
+                                    dispatch(
+                                      updateRowInEntity({
+                                        rowName: name,
+                                        equipmentCosts: equipment,
+                                        estimatedProfit: projit,
+                                        salary: salary,
+                                        overheads: expenses,
+                                        id: lastString!.id,
+                                        index: index,
+                                        parentId: subString.id,
+                                        string: 2,
+                                        sub_string_index: index2,
+                                        last_string_index: index3,
+                                      })
+                                    )
+                                  }
+                                  title={'Enter для отпрвки данных'}
+                                  value={expenses}
+                                  className={'input_edit input_number'}
+                                  type={'number'}
+                                  onChange={(e) => setExpenses(Number(e.target.value))}
+                                />
+                              ) : (
+                                lastString?.overheads
+                              )}
+                            </td>
+                            <td title={'Двойное нажатие для редактирования'}>
+                              {currentEditString?.id === lastString?.id ? (
+                                <input
+                                  onKeyDown={(e) =>
+                                    e.code === 'Enter' &&
+                                    dispatch(
+                                      updateRowInEntity({
+                                        rowName: name,
+                                        equipmentCosts: equipment,
+                                        estimatedProfit: projit,
+                                        salary: salary,
+                                        overheads: expenses,
+                                        id: lastString!.id,
+                                        index: index,
+                                        parentId: subString.id,
+                                        string: 2,
+                                        sub_string_index: index2,
+                                        last_string_index: index3,
+                                      })
+                                    )
+                                  }
+                                  title={'Enter для отпрвки данных'}
+                                  value={projit}
+                                  className={'input_edit input_number'}
+                                  type={'number'}
+                                  onChange={(e) => setProjit(Number(e.target.value))}
+                                />
+                              ) : (
+                                lastString?.estimatedProfit
+                              )}
+                            </td>
                             <div className={'separate_line'}></div>
                           </tr>
                         ))}
