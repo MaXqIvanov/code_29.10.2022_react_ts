@@ -47,7 +47,7 @@ export const SideBar = () => {
     {
       id: 9,
       title: 'Кап вложения',
-      route: '/capital investments',
+      route: '/capital_investments',
     },
     {
       id: 10,
@@ -100,7 +100,7 @@ export const SideBar = () => {
     const currentNavId = navSidebarElems.filter((elem: sidebar) =>
       elem.route.includes(window.location.pathname.split('/')[1])
     );
-    setCurrentNavSidebar(currentNavId[0].id);
+    setCurrentNavSidebar(currentNavId[0]?.id);
   }, [window.location.pathname]);
 
   return (
