@@ -25,7 +25,7 @@ export const TableCpm = () => {
         </thead>
         <tbody>
           {stringAll?.length > 0 ? (
-            stringAll.map((elem: getNewString, index: number) => (
+            stringAll.map((elem: getNewString | any, index: number) => (
               <>
                 <tr className={'string_elem'} key={elem.id}>
                   <td
@@ -96,81 +96,152 @@ export const TableCpm = () => {
                 </tr>
                 {elem.child?.length > 0 &&
                   elem.child.map((subString: getNewString | null, index2: number) => (
-                    <tr className={'substring_elem'} key={subString?.id}>
-                      <td
-                        onMouseEnter={() => setCurrentHoverString(subString?.id)}
-                        onMouseLeave={() => setCurrentHoverString(null)}
-                        className={'cell_btn'}
-                      >
-                        <div
-                          style={{
-                            top: index2 !== 0 ? '-34px' : '-24px',
-                            height: index2 !== 0 ? '64px' : '54px',
-                          }}
-                          className={'link_line'}
-                        ></div>
-                        <div className={'link_line_horizontal'}></div>
-                        <div
-                          className={
-                            subString?.id === currentHoverString
-                              ? 'visible_all_btn'
-                              : 'not_visible_all_btn'
-                          }
+                    <>
+                      <tr className={'substring_elem'} key={subString?.id}>
+                        <td
+                          onMouseEnter={() => setCurrentHoverString(subString?.id)}
+                          onMouseLeave={() => setCurrentHoverString(null)}
+                          className={'cell_btn'}
                         >
                           <div
-                            onClick={() =>
-                              dispatch(
-                                createRowInEntity({
-                                  parentId: elem.id,
-                                  string: 1,
-                                  index: index,
-                                  sub_string_index: 0,
-                                })
-                              )
-                            }
-                            title={'Создать подстроку'}
-                            className={'btn_field_2'}
+                            style={{
+                              bottom: index2 !== 0 ? '30px' : '30px',
+                              height:
+                                index2 !== 0
+                                  ? `calc(61px * ${elem.child[index2 - 1].child.length + 1})`
+                                  : '54px',
+                            }}
+                            className={'link_line'}
                           ></div>
-                          {currentHoverString === subString?.id && (
-                            <>
+                          <div className={'link_line_horizontal'}></div>
+                          <div
+                            className={
+                              subString?.id === currentHoverString
+                                ? 'visible_all_btn'
+                                : 'not_visible_all_btn'
+                            }
+                          >
+                            <div
+                              onClick={() =>
+                                dispatch(
+                                  createRowInEntity({
+                                    parentId: elem.id,
+                                    string: 1,
+                                    index: index,
+                                    sub_string_index: 0,
+                                  })
+                                )
+                              }
+                              title={'Создать подстроку'}
+                              className={'btn_field_2'}
+                            ></div>
+                            {currentHoverString === subString?.id && (
+                              <>
+                                <div
+                                  onClick={() =>
+                                    dispatch(
+                                      createRowInEntity({
+                                        parentId: subString !== null ? subString.id : null,
+                                        string: 2,
+                                        index: index,
+                                        sub_string_index: index2,
+                                      })
+                                    )
+                                  }
+                                  className={'btn_text_field'}
+                                ></div>
+                                <div
+                                  onClick={() =>
+                                    dispatch(
+                                      deleteRow({
+                                        id: subString?.id,
+                                        string: 1,
+                                        index: index,
+                                        sub_string_index: index2,
+                                      })
+                                    )
+                                  }
+                                  title={'Удалить подстроку'}
+                                  className={'btn_delete'}
+                                ></div>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                        <td>{subString?.rowName}</td>
+                        <td>{subString?.salary}</td>
+                        <td>{subString?.equipmentCosts}</td>
+                        <td>{subString?.overheads}</td>
+                        <td>{subString?.estimatedProfit}</td>
+                        <div className={'separate_line'}></div>
+                      </tr>
+                      {subString !== null &&
+                        subString.child?.length > 0 &&
+                        subString.child.map((lastString: getNewString | null, index3: number) => (
+                          <tr className={'btn_text_field_elem'} key={subString?.id}>
+                            <td
+                              onMouseEnter={() => setCurrentHoverString(lastString?.id)}
+                              onMouseLeave={() => setCurrentHoverString(null)}
+                              className={'cell_btn'}
+                            >
                               <div
-                                onClick={() =>
-                                  dispatch(
-                                    createRowInEntity({
-                                      parentId: subString !== null ? subString.id : null,
-                                      string: 2,
-                                      index: index,
-                                      sub_string_index: index2,
-                                    })
-                                  )
-                                }
-                                className={'btn_text_field'}
+                                style={{
+                                  top: index3 !== 0 ? '-31px' : '-24px',
+                                  height: index3 !== 0 ? '62px' : '56px',
+                                }}
+                                className={'link_line'}
                               ></div>
+                              <div className={'link_line_horizontal'}></div>
                               <div
-                                onClick={() =>
-                                  dispatch(
-                                    deleteRow({
-                                      id: subString?.id,
-                                      string: 1,
-                                      index: index,
-                                      sub_string_index: index2,
-                                    })
-                                  )
+                                className={
+                                  lastString?.id === currentHoverString
+                                    ? 'visible_all_btn'
+                                    : 'not_visible_all_btn'
                                 }
-                                title={'Удалить подстроку'}
-                                className={'btn_delete'}
-                              ></div>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                      <td>{subString?.rowName}</td>
-                      <td>{subString?.salary}</td>
-                      <td>{subString?.equipmentCosts}</td>
-                      <td>{subString?.overheads}</td>
-                      <td>{subString?.estimatedProfit}</td>
-                      <div className={'separate_line'}></div>
-                    </tr>
+                              >
+                                <div
+                                  onClick={() =>
+                                    dispatch(
+                                      createRowInEntity({
+                                        parentId: subString.id,
+                                        string: 2,
+                                        index: index,
+                                        sub_string_index: index2,
+                                      })
+                                    )
+                                  }
+                                  title={'Создать подстроку'}
+                                  className={'btn_text_field'}
+                                ></div>
+                                {currentHoverString === lastString?.id && (
+                                  <>
+                                    <div
+                                      onClick={() =>
+                                        dispatch(
+                                          deleteRow({
+                                            id: subString?.id,
+                                            string: 2,
+                                            index: index,
+                                            sub_string_index: index2,
+                                          })
+                                        )
+                                      }
+                                      title={'Удалить подстроку'}
+                                      className={'btn_delete'}
+                                    ></div>
+                                  </>
+                                )}
+                              </div>
+                            </td>
+                            <td>{subString?.rowName}</td>
+                            <td>{subString?.salary}</td>
+                            <td>{subString?.equipmentCosts}</td>
+                            <td>{subString?.overheads}</td>
+                            <td>{subString?.estimatedProfit}</td>
+                            <div className={'separate_line'}></div>
+                          </tr>
+                        ))}
+                    </>
                   ))}
               </>
             ))

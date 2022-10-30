@@ -118,9 +118,10 @@ const stringSlice = createSlice({
           state.stringAll = [...state.stringAll, response];
         }
         if (payload.params.string === 1) {
+          const response = { ...payload.response.data.current, child: [] };
           state.stringAll[payload.params.index].child = [
             ...state.stringAll[payload.params.index].child,
-            payload.response.data.current,
+            response,
           ];
         }
         if (payload.params.string === 2) {
