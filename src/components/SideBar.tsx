@@ -101,7 +101,7 @@ export const SideBar = () => {
       elem.route.includes(window.location.pathname.split('/')[1])
     );
     setCurrentNavSidebar(currentNavId[0].id);
-  }, []);
+  }, [window.location.pathname]);
 
   return (
     <div className={'sidebar'}>

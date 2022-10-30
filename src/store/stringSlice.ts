@@ -36,6 +36,45 @@ export const createRowInEntity = createAsyncThunk(
     return { response, params };
   }
 );
+export const createTwoRowInEntity = createAsyncThunk(
+  'auth/createTwoRowInEntity',
+  async (params: {
+    parentId: number | null;
+    string: number;
+    index: number;
+    sub_string_index: number;
+  }) => {
+    const response = await api.post(`/v1/outlay-rows/entity/${Cookies.get('eID')}/row/create`, {
+      equipmentCosts: 0,
+      estimatedProfit: 0,
+      machineOperatorSalary: 0,
+      mainCosts: 0,
+      materials: 0,
+      mimExploitation: 0,
+      overheads: 0,
+      parentId: params.parentId,
+      rowName: '',
+      salary: 0,
+      supportCosts: 0,
+    });
+    console.log(response.data.current.id);
+
+    const response2 = await api.post(`/v1/outlay-rows/entity/${Cookies.get('eID')}/row/create`, {
+      equipmentCosts: 0,
+      estimatedProfit: 0,
+      machineOperatorSalary: 0,
+      mainCosts: 0,
+      materials: 0,
+      mimExploitation: 0,
+      overheads: 0,
+      parentId: response.data.current.id,
+      rowName: '',
+      salary: 0,
+      supportCosts: 0,
+    });
+    return { response, response2, params };
+  }
+);
 export const deleteRow = createAsyncThunk(
   'auth/deleteRow',
   async (params: {
@@ -290,6 +329,53 @@ const stringSlice = createSlice({
       }
     );
     builder.addCase(updateRowInEntity.rejected, (state: stringState) => {
+      state.loading = false;
+    });
+    // createTwoRowInEntity
+    builder.addCase(createTwoRowInEntity.pending, (state: stringState, action: PayloadAction) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      createTwoRowInEntity.fulfilled,
+      (
+        state: stringState,
+        {
+          payload,
+        }: PayloadAction<{
+          params: {
+            parentId: number | null;
+            string: number;
+            index: number;
+            sub_string_index: number;
+          };
+          response: { data: { current: typeAllString }; status: number };
+          response2: { data: { current: typeAllString } };
+        }>
+      ) => {
+        console.log(payload);
+        if (payload.response.status < 300) {
+          if (payload.params.string === 1) {
+            const response = { ...payload.response.data.current, child: [] };
+            state.stringAll[payload.params.index].child = [
+              ...state.stringAll[payload.params.index].child,
+              response,
+            ];
+          }
+          if (payload.params.string === 1) {
+            state.stringAll[payload.params.index].child[
+              state.stringAll[payload.params.index].child.length - 1
+            ].child = [
+              ...state.stringAll[payload.params.index].child[
+                state.stringAll[payload.params.index].child.length - 1
+              ].child,
+              payload.response2.data.current,
+            ];
+          }
+        }
+        state.loading = false;
+      }
+    );
+    builder.addCase(createTwoRowInEntity.rejected, (state: stringState) => {
       state.loading = false;
     });
   },

@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/redux';
 import { RootState } from '../../store/store';
-import { createRowInEntity, deleteRow, updateRowInEntity } from '../../store/stringSlice';
+import {
+  createRowInEntity,
+  deleteRow,
+  updateRowInEntity,
+  createTwoRowInEntity,
+} from '../../store/stringSlice';
 import { typeLastString, typeSubString, typeAllString } from '../../ts';
 
 export const TableCpm = () => {
@@ -26,6 +31,16 @@ export const TableCpm = () => {
       setProjit(currentEditString.estimatedProfit);
     }
   }, [currentEditString]);
+  const createTwoString = async ({ index, id }: { id: number; index: number }) => {
+    const { payload }: any = await dispatch(
+      createTwoRowInEntity({
+        parentId: id,
+        string: 1,
+        index: index,
+        sub_string_index: 0,
+      })
+    );
+  };
 
   return (
     <div className={'table_wrapper'}>
@@ -90,7 +105,10 @@ export const TableCpm = () => {
                             title={'Создать подстроку'}
                             className={'btn_field_2'}
                           ></div>
-                          <div className={'btn_text_field'}></div>
+                          <div
+                            onClick={() => createTwoString({ id: elem.id, index: index })}
+                            className={'btn_text_field'}
+                          ></div>
                           <div
                             onClick={() =>
                               dispatch(
