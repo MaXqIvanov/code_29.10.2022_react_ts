@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import api from '../plugins/axios/api';
 import Cookies from 'js-cookie';
-import { getString, stringState, typeAllString } from '../ts';
+import { getString, stringState, typeAllString, typeLastString } from '../ts';
 import { Params } from 'react-router-dom';
 
 export const getSpecialKey = createAsyncThunk('auth/getString', async () => {
@@ -234,7 +234,7 @@ const stringSlice = createSlice({
             sub_string_index: number;
             last_string_index: number;
           };
-          response: { data: { changed: any }; status: number };
+          response: { data: { changed: Array<typeLastString> }; status: number };
         }>
       ) => {
         if (payload.response.status < 300) {
@@ -285,7 +285,7 @@ const stringSlice = createSlice({
             sub_string_index: number;
             last_string_index: number;
           };
-          response: { data: { current: typeAllString; changed: any }; status: number };
+          response: { data: { current: typeAllString; changed: Array<typeLastString> }; status: number };
         }>
       ) => {
         console.log(payload);
