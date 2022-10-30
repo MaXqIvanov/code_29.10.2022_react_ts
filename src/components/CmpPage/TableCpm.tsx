@@ -178,7 +178,7 @@ export const TableCpm = () => {
                       {subString !== null &&
                         subString.child?.length > 0 &&
                         subString.child.map((lastString: getNewString | null, index3: number) => (
-                          <tr className={'btn_text_field_elem'} key={subString?.id}>
+                          <tr className={'btn_text_field_elem'} key={lastString?.id}>
                             <td
                               onMouseEnter={() => setCurrentHoverString(lastString?.id)}
                               onMouseLeave={() => setCurrentHoverString(null)}

@@ -160,6 +160,7 @@ const stringSlice = createSlice({
           state.stringAll.splice(payload.params.index, 1);
         }
         if (payload.params.string === 1) {
+          state.stringAll[payload.params.index].child[payload.params.sub_string_index].child = [];
           state.stringAll[payload.params.index].child.splice(payload.params.sub_string_index, 1);
         }
       }
